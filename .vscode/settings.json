@@ -1,0 +1,13 @@
+{
+  "editor.insertSpaces": true,
+  "files.eol": "\n",
+  "editor.formatOnSave": true,
+  "[markdown]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
