@@ -175,9 +175,9 @@ The correct answer is: **3. Management groups**
 
 ## 14. Which of the following features applies to resource groups?
 
-1. An Azure resource group is a logical unit of Azure services.
+1. `An Azure resource group is a logical unit of Azure services.`
 2. You can't have more than one resource group.
-3. `Using Azure doesn't require a resource group.`
+3. Using Azure doesn't require a resource group.
 
 ## 15. True or false: In an IaaS environment, the cloud tenant is responsible for routine hardware maintenance
 
