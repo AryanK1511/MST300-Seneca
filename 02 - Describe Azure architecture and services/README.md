@@ -465,3 +465,121 @@ curl --connect-timeout 5 http://$IPADDRESS
 
 - A storage account provides a unique namespace for your Azure Storage data that's accessible from anywhere in the world over HTTP or HTTPS.
 - Your storage account name must be unique within Azure. No two storage accounts can have the same name. This supports the ability to have a unique, accessible namespace in Azure.
+- **Types of Storages**
+  - Azure Blobs: A massively scalable object store for text and binary data. Also includes support for big data analytics through Data Lake Storage Gen2.
+  - Azure Files: Managed file shares for cloud or on-premises deployments.
+  - Azure Queues: A messaging store for reliable messaging between application components.
+  - Azure Disks: Block-level storage volumes for Azure VMs.
+  - Azure Tables: NoSQL table option for structured, non-relational data.
+- **Redundancy Models**
+  - Locally redundant storage (LRS): replicates your data three times within a single data center in the primary region (11 nines)
+  - Geo-redundant storage (GRS): Azure Storage offers two options for copying your data to a secondary region: geo-redundant storage (GRS) and geo-zone-redundant storage (GZRS). GRS copies your data synchronously three times within a single physical location in the primary region using LRS (16 nines)
+  - Read-access geo-redundant storage (RA-GRS)
+  - Zone-redundant storage (ZRS): replicates your Azure Storage data synchronously across three Azure availability zones in the primary region (12 nines)
+  - Geo-zone-redundant storage (GZRS): GRS is similar to running LRS in two regions, and GZRS is similar to running ZRS in the primary region and LRS in the secondary region. Data in a GZRS storage account is copied across three Azure availability zones in the primary region (similar to ZRS) and is also replicated to a secondary geographic region, using LRS (16 nines).
+  - Read-access geo-zone-redundant storage (RA-GZRS): Geo-redundant storage (with GRS or GZRS) replicates your data to another physical location in the secondary region to protect against regional outages. However, that data is available to be read only if the customer or Microsoft initiates a failover from the primary to secondary region.
+
+> The interval between the most recent writes to the primary region and the last write to the secondary region is known as the recovery point objective (RPO). The RPO indicates the point in time to which data can be recovered. Azure Storage typically has an RPO of less than 15 minutes, although there's currently no SLA on how long it takes to replicate data to the secondary region.
+
+#### Blog storage
+
+Azure Storage offers different access tiers for your blob storage, helping you store object data in the most cost-effective manner. The available access tiers include:
+
+- **Hot access tier:** Optimized for storing data that is accessed frequently (for example, images for your website).
+- **Cool access tier:** Optimized for data that is infrequently accessed and stored for at least 30 days (for example, invoices for your customers).
+- **Cold access tier:** Optimized for storing data that is infrequently accessed and stored for at least 90 days.
+- **Archive access tier:** Appropriate for data that is rarely accessed and stored for at least 180 days, with flexible latency requirements (for example, long-term backups).
+
+#### Azure Files
+
+- **Fully managed file shares** accessible via SMB (Windows, Linux, macOS) and NFS (Linux, macOS).
+- Can be mounted by cloud or on-premise deployments.
+- **Key Benefits**:
+  - Shared access via industry-standard protocols (SMB/NFS).
+  - No need to manage hardware or OS.
+  - Managed via PowerShell, Azure CLI, Azure Portal, or Storage Explorer.
+  - Highly available and resilient.
+  - Familiar file system APIs for seamless app integration.
+
+#### Azure Queues
+
+- **Message storage service** for asynchronous processing.
+- Each message can be up to **64 KB**; storage scales with account size.
+- Used to build work backlogs for asynchronous processing.
+- Can trigger compute actions (e.g., Azure Functions).
+
+#### Azure Disks
+
+- **Block-level storage** for use with Azure VMs, similar to physical disks but virtualized.
+- Managed by Azure for high resiliency and availability.
+- Simple provisioning and management.
+
+#### Azure Tables
+
+- **NoSQL datastore** for structured, non-relational data.
+- Supports hybrid and multicloud solutions.
+- Accessible via authenticated calls from inside and outside Azure.
+
+#### Azure Migrate
+
+- **Service for migrating on-premises infrastructure, apps, and data to Azure**.
+- **Unified Migration Platform**: Centralized hub to manage assessments and migration.
+- **Range of Tools**:
+  - **Azure Migrate: Discovery and Assessment**: Analyze VMware, Hyper-V, and physical servers for migration readiness.
+  - **Azure Migrate: Server Migration**: Migrate VMs (VMware, Hyper-V), physical servers, and cloud VMs.
+  - **Data Migration Assistant**: Assesses SQL Servers for migration, identifying potential issues and new feature benefits.
+  - **Azure Database Migration Service**: Migrate SQL Servers, databases, and instances to Azure.
+  - **Azure App Service Migration Assistant**: Helps migrate .NET and PHP web apps to Azure.
+
+#### Azure Data Box
+
+- **Physical migration service** for large data transfers (up to 80TB).
+- **Ideal Use Cases**:
+  - One-time large data migrations to Azure.
+  - Initial bulk transfer followed by incremental online transfers.
+  - Periodic uploads of large datasets.
+  - **Export use cases**: Disaster recovery, meeting security requirements, or migrating back to on-premises or another cloud provider.
+- **Secure and Fast**: Data transfer is accelerated using a proprietary device, securely tracked, and wiped after transfer (NIST 800-88r1 standards).
+
+#### Azure Migration and Sync Tools
+
+1. **AzCopy**:
+
+   - **Command-line utility** for copying blobs/files between storage accounts or clouds.
+   - Supports **uploading, downloading, and synchronizing** files.
+   - **One-direction synchronization**: Sync is always from source to destination without bi-directional sync.
+
+2. **Azure Storage Explorer**:
+
+   - **Graphical interface** to manage Azure storage (files and blobs).
+   - Available on **Windows, macOS, and Linux**.
+   - Uses **AzCopy** as its backend for file operations like upload, download, and storage account transfers.
+
+3. **Azure File Sync**:
+
+   - **Centralizes file shares** using Azure Files, while maintaining local access.
+   - Works like a **miniature content delivery network (CDN)**.
+   - Supports **SMB, NFS, FTPS** protocols for local access.
+   - Features:
+     - **Bi-directional sync** between Windows server and Azure.
+     - **Cloud tiering** to store frequently accessed files locally, while less accessed ones are kept in the cloud.
+     - Ability to **replace failed servers** easily by installing File Sync on new hardware in the same data center.
+
+## 04. Describe Azure identity, access, and security
+
+- Microsoft entra ID is the login screen that we usually see when we try to access microsoft apps.
+- Active Directory running on Windows Server provides an identity and access management service that's managed by your organization.
+- You can configure microsoft entra ID to work with Azure Active Directory.
+- Microsoft Entra ID can detect sign-in attempts from unexpected locations or unknown devices.
+
+Microsoft Entra ID provides the following services:
+
+- Authentication
+- Single Sign On
+- Application Management
+- Device Management
+
+- If you have an on prem active directory and Entra ID configured on the cloud, you would need to maintain two seperate identity sets. **Microsoft Entra Connect** synchronizes changes between both identity systems.
+- **Microsoft Entra Domain Services** is a service that provides managed domain services such as domain join, group policy, lightweight directory access protocol (LDAP), and Kerberos/NTLM authentication.
+- A Microsoft Entra Domain Services managed domain lets you run legacy applications in the cloud that can't use modern authentication methods, or where you don't want directory lookups to always go back to an on-premises AD DS environment. You can lift and shift those legacy applications from your on-premises environment into a managed domain, without needing to manage the AD DS environment in the cloud.
+- Microsoft Entra Domain Services integrates with your existing Microsoft Entra tenant
