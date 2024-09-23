@@ -367,3 +367,101 @@ az network nsg rule create --resource-group "learn-9b90047b-2597-4d55-95ac-98982
 ```bash
 curl --connect-timeout 5 http://$IPADDRESS
 ```
+
+### Azure virtual private networks
+
+- Encrytpted tunnel within another network.
+- Connect private networks over the internet.
+- **VPN (Virtual Private Network)**: Uses encrypted tunnels over an untrusted network (usually the internet) to securely connect trusted private networks or devices.
+- **VPN Gateway**: A type of virtual network gateway in Azure, deployed in a dedicated subnet of the virtual network, allowing various types of connectivity:
+  - Site-to-site (connect on-premises datacenters to virtual networks)
+  - Point-to-site (connect individual devices to virtual networks)
+  - Network-to-network (connect virtual networks to each other)
+- **Data Encryption**: All data transfer is encrypted inside a private tunnel as it crosses the internet.
+
+#### VPN Gateway Types
+
+1. **Policy-Based VPN**:
+
+   - Uses static IP addresses to define which traffic is encrypted.
+   - Each packet is evaluated against IP address sets to choose the tunnel.
+
+2. **Route-Based VPN**:
+   - Preferred for on-premises devices.
+   - Uses IP routing to decide tunnel interface for each packet (supports static/dynamic routing).
+   - Recommended for:
+     - Virtual network connections
+     - Point-to-site connections
+     - Multisite connections
+     - Coexistence with Azure ExpressRoute
+     - High availability
+
+#### High Availability Options
+
+- **Active/Standby**:
+
+  - Default configuration (two instances, active and standby).
+  - Failover during maintenance or disruption, restoring within seconds to 90 seconds.
+
+- **Active/Active**:
+
+  - BGP routing protocol enables active/active configuration.
+  - Border gateway protocol allows two separate devices to store the same routing information.
+  - Requires unique public IPs and separate tunnels.
+
+- **ExpressRoute Failover**:
+
+  - Configures VPN gateway as a failover path for ExpressRoute connections during outages.
+
+- **Zone-Redundant Gateways**:
+  - Provides resiliency by separating gateways within availability zones.
+  - Requires specific SKUs and Standard public IPs.
+
+### Azure ExpressRoute
+
+- **Private Connection**: Extends on-premises networks into the Microsoft cloud via a private connection, called an ExpressRoute Circuit, through a connectivity provider.
+- **No Public Internet**: Data does not travel over the public internet, offering higher reliability, security, faster speeds, and consistent latencies.
+- **Global Connectivity**: Can connect multiple sites globally with ExpressRoute Global Reach.
+
+#### Features & Benefits
+
+- **Access to Microsoft Services**: Direct access to Microsoft cloud services, including Azure, Microsoft 365, and Dynamics 365.
+- **Dynamic Routing**: Uses Border Gateway Protocol (BGP) for dynamic routing between on-premises networks and Azure services.
+- **Redundancy**: Built-in redundancy with multiple circuits and devices for high availability.
+
+#### Connectivity Models
+
+1. **Cloud Exchange Colocation**: Virtual cross-connection at a colocation facility.
+2. **Point-to-Point Ethernet**: Direct connection from your facility to the Microsoft cloud.
+3. **Any-to-Any Network**: Integrates your WAN with Azure, connecting datacenters and branch offices.
+4. **ExpressRoute Sites**: Direct connection to Microsoft's global network at a peering location.
+
+#### Security
+
+- **Private Connection**: No data travels over the public internet, enhancing security.
+- **Public Internet Use**: Some services (DNS queries, Azure CDN requests) may still require internet access.
+
+### Azure DNS
+
+- **DNS Hosting Service**: Manages DNS domains using Microsoft Azure's infrastructure for name resolution.
+- **Unified Management**: Uses the same credentials, APIs, tools, and billing as other Azure services.
+
+1. **Reliability & Performance**:
+   - Hosted on Azure’s global network of DNS servers for high availability and fast responses via anycast networking.
+2. **Security**:
+   - Uses Azure Resource Manager for role-based access control (RBAC), activity logs, and resource locking.
+3. **Ease of Use**:
+   - Integrated with the Azure portal, PowerShell, Azure CLI, and REST APIs for easy domain and record management.
+4. **Custom Virtual Networks**:
+   - Supports private DNS domains for use within private virtual networks.
+5. **Alias Records**:
+   - Automatically updates DNS records when underlying Azure resources (e.g., IP addresses) change.
+
+> **NOTE:** Azure DNS **does not support domain purchasing**, but purchased domains can be hosted for DNS management.
+
+## 3. Describe Azure Storage Services
+
+### Describe Azure Storage Accounts
+
+- A storage account provides a unique namespace for your Azure Storage data that's accessible from anywhere in the world over HTTP or HTTPS.
+- Your storage account name must be unique within Azure. No two storage accounts can have the same name. This supports the ability to have a unique, accessible namespace in Azure.
